@@ -6,11 +6,10 @@ resource "random_id" "suffix" {
   byte_length = 2
 }
 
-resource "google_project" "dev_project" {
+resource "google_project" "new_project" {
   name            = "ai-dev"
-  project_id      = "ai-dev-${random_id.suffix.hex}"
+  project_id      = var.project_id # Using the ID from your GitHub Secret
   
-  # Logic: Clean the Folder ID and Billing Account strings
   folder_id       = replace(trimspace(var.dev_folder_id), "folders/", "")
   billing_account = trimspace(var.billing_account)
   
