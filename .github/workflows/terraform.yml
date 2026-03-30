@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./terraform=pro
+        working-directory: ./terraform-pro
     
     # Use Environment Variables for easy updates
     env:
