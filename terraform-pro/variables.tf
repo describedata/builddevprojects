@@ -95,3 +95,26 @@ variable "subnet_cidr" {
   type        = string
   default     = "10.0.1.0/24"
 }
+
+# ---------------------------------------------------------------------------------
+# 3. IDENTITY & STORAGE
+# ---------------------------------------------------------------------------------
+
+output "agent_runtime_service_account" {
+  description = "The email of the SA that developers must use for their agents."
+  value       = google_service_account.agent_runtime_sa.email
+}
+
+output "data_bucket_url" {
+  description = "The GCS bucket URL for uploading EHR/FHIR data."
+  value       = "gs://${google_storage_bucket.dev_data_bucket.name}"
+}
+
+# ---------------------------------------------------------------------------------
+# 4. REPOSITORY INFO
+# ---------------------------------------------------------------------------------
+
+output "artifact_registry_repo" {
+  description = "The full path to the Docker repository for agent images."
+  value       = "${var.region}-docker.pkg.dev/${google_project.dev_project.project_id}/agent-repo"
+}

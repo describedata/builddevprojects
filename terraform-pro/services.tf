@@ -31,7 +31,7 @@ resource "google_project_service" "enabled_apis" {
   depends_on = [time_sleep.wait_for_billing_sync]
 
     # Crucial: Ensure the project exists before enabling APIs
-  depends_on = [google_project.new_project]
+  #depends_on = [google_project.new_project]
 
   # Optional: Prevents APIs from being disabled if you remove them from the list
   # and run terraform apply again (useful for stability).

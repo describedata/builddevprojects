@@ -68,11 +68,7 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
 # The Agent only needs to read that data.
 
 # Developers: Full control over files (Object Admin)
-resource "google_storage_bucket_iam_member" "dev_data_access" {
-  bucket = google_storage_bucket.dev_data_bucket.name
-  role   = "roles/storage.objectAdmin"
-  member = "group:${var.developer_group_email}"
-}
+
 
 # AI Agent: Read-only access to files (Object Viewer)
 resource "google_storage_bucket_iam_member" "agent_read_access" {
