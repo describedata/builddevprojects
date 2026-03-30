@@ -1,0 +1,117 @@
+
+variable "project_name" {
+  description = "The display name of the project"
+  type        = string
+}
+
+variable "project_id" {
+  description = "The unique ID (e.g., ai-dev)"
+  type        = string
+}
+
+variable "billing_account" {
+  description = "The Billing Account ID (XXXXXX-XXXXXX-XXXXXX)"
+  type        = string
+}
+
+variable "folder_id" {
+  description = "The Folder ID where this project will be nested"
+  type        = string
+}
+
+variable "developer_emails" {
+  description = "A list of Google Workspace emails/groups for developer access"
+  type        = list(string)
+  # Example: ["user1@domain.com", "user2@domain.com"]
+}
+
+
+# ---------------------------------------------------------------------------------
+# 1. IDENTIFICATION & HIERARCHY
+# ---------------------------------------------------------------------------------
+
+variable "org_id" {
+  description = "The numeric Organization ID where the project will be created."
+  type        = string
+}
+
+variable "project_name" {
+  description = "The display name of the project"
+  type        = string
+}
+
+variable "project_id" {
+  description = "The unique ID (e.g., ai-dev)"
+  type        = string
+}
+
+variable "folder_id" {
+  description = "The Folder ID where this project will be nested"
+  type        = string
+}
+variable "dev_folder_id" {
+  description = "The Folder ID (numeric or 'folders/123') where the dev project lives."
+  type        = string
+}
+
+variable "billing_account" {
+  description = "The 18-character alphanumeric Billing Account ID (XXXXXX-XXXXXX-XXXXXX)."
+  type        = string
+}
+
+variable "customer_id" {
+  description = "The Customer ID for Cloud Identity (starts with C)"
+  type        = string
+  default     = "C0320vp24" # Replace with your actual ID
+}
+
+# ---------------------------------------------------------------------------------
+# 2. REGIONAL SETTINGS
+# ---------------------------------------------------------------------------------
+
+variable "region" {
+  description = "The primary GCP region for networking and resources."
+  type        = string
+  default     = "us-central1"
+}
+
+variable "zone" {
+  description = "The primary GCP zone for compute resources."
+  type        = string
+  default     = "us-central1-a"
+}
+
+# ---------------------------------------------------------------------------------
+# 3. ACCESS CONTROL
+# ---------------------------------------------------------------------------------
+
+
+
+variable "developer_group_email" {
+  default = "group:developers@describedata.ai" # Must include the 'group:' prefix
+  description = "The Google Group or individual email for the developer team (e.g., group:devs@company.com)."
+  type        = string
+}
+
+#variable "developer_emails" {
+#  description = "A list of Google Workspace emails/groups for developer access"
+
+#  type        = list(string)
+  # Example: ["user1@domain.com", "user2@domain.com"]
+#}
+
+# ---------------------------------------------------------------------------------
+# 4. NETWORKING
+# ---------------------------------------------------------------------------------
+
+variable "vpc_name" {
+  description = "The name of the VPC network."
+  type        = string
+  default     = "ai-dev-vpc"
+}
+
+variable "subnet_cidr" {
+  description = "The IP range for the primary development subnet."
+  type        = string
+  default     = "10.0.1.0/24"
+}

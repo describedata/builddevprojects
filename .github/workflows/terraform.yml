@@ -1,0 +1,56 @@
+name: 'GCP Project Factory'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Core permissions for Workload Identity Federation
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    
+    # Use Environment Variables for easy updates
+    env:
+      PROJECT_ID: "audit-terraform-seed"
+      # REPLACE the number and IDs below with your Step 1 results
+      WIF_PROVIDER: "projects/571707457370/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider"
+      SERVICE_ACCOUNT: "terraform-manager@audit-terraform-seed.iam.gserviceaccount.com"
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Google Auth
+      id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        token_format: 'access_token'
+        workload_identity_provider: ${{ env.WIF_PROVIDER }}
+        service_account: ${{ env.SERVICE_ACCOUNT }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Format Check
+      run: terraform fmt -check
+      continue-on-error: true
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -input=false
+      # Use this to see what will happen before it happens
+
+    - name: Terraform Apply
+      # Only run Apply on pushes to the main branch
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve -input=false

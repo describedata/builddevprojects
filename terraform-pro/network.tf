@@ -1,0 +1,37 @@
+
+
+# 1. Create the VPC
+resource "google_compute_network" "vpc" {
+  name                    = "ai-dev-vpc"
+  project                 = google_project.dev_project.project_id
+  auto_create_subnetworks = false
+}
+
+# 2. Create a Private Subnet
+resource "google_compute_subnetwork" "subnet" {
+  name          = "ai-dev-subnet"
+  project       = google_project.dev_project.project_id
+  ip_cidr_range = "10.0.1.0/24"
+  region        = "us-central1"
+  network       = google_compute_network.vpc.id
+  
+  # Allows resources to use Google APIs without public IPs
+  private_ip_google_access = true 
+}
+
+# 3. Create Cloud NAT (So Private Agents can reach the Internet)
+resource "google_compute_router" "router" {
+  name    = "ai-dev-router"
+  project = google_project.dev_project.project_id
+  region  = "us-central1"
+  network = google_compute_network.vpc.id
+}
+
+resource "google_compute_router_nat" "nat" {
+  name                               = "ai-dev-nat"
+  project                            = google_project.dev_project.project_id
+  router                             = google_compute_router.router.name
+  region                             = "us-central1"
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+}
