@@ -39,20 +39,6 @@ resource "time_sleep" "wait_for_billing_sync" {
 # This creates the central "developers@yourdomain.com" group.
 # Note: Requires 'google-beta' provider and Group Admin permissions.
 
-resource "google_cloud_identity_group" "dev_group" {
-  provider     = google-beta
-  parent       = "customers/${var.customer_id}"
-  display_name = "AI Developer Team"
-  description  = "Access group for the ai-dev project resources"
-
-  group_key {
-    id = var.developer_group_email
-  }
-
-  labels = {
-    "cloudidentity.googleapis.com/groups.discussion_forum" = ""
-  }
-}
 
 # ---------------------------------------------------------------------------------
 # 4. INITIAL GROUP MEMBERSHIP
@@ -94,21 +80,6 @@ resource "google_vpc_access_connector" "connector" {
 # ---------------------------------------------------------------------------------
 # 6. SHARED NETWORK (VPC)
 # ---------------------------------------------------------------------------------
-resource "google_compute_network" "vpc" {
-  name                    = "ai-dev-vpc"
-  project                 = google_project.dev_project.project_id
-  auto_create_subnetworks = false
-  depends_on              = [time_sleep.wait_for_billing_sync]
-}
-
-resource "google_compute_subnetwork" "subnet" {
-  name                     = "ai-dev-subnet"
-  project                  = google_project.dev_project.project_id
-  ip_cidr_range            = "10.0.1.0/24"
-  region                   = "us-central1"
-  network                  = google_compute_network.vpc.id
-  private_ip_google_access = true
-}
 
 
 # ---------------------------------------------------------------------------------
@@ -116,16 +87,6 @@ resource "google_compute_subnetwork" "subnet" {
 # ---------------------------------------------------------------------------------
 
 # The "Agent Identity" that developers will use for Vertex AI and Cloud Run
-resource "google_service_account" "agent_runtime_sa" {
-  project      = google_project.dev_project.project_id
-  account_id   = "agent-runtime-sa"
-  display_name = "Restricted Runtime Identity for AI Agents"
-}
 
 # Grant Developers the ability to "Act As" this Service Account (Impersonation)
 # This allows them to deploy without having Project Admin/Owner rights.
-resource "google_service_account_iam_member" "developer_impersonation" {
-  service_account_id = google_service_account.agent_runtime_sa.name
-  role               = "roles/iam.serviceAccountUser"
-  member             = "group:developers@describedata.ai" # Update to your group/email
-}

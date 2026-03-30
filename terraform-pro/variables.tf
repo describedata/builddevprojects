@@ -67,6 +67,12 @@ variable "developer_group_email" {
   type        = string
 }
 
+variable "developer_emails" {
+  description = "A list of Google Workspace emails/groups for developer access"
+  type        = list(string)
+  # Example: ["user1@domain.com", "user2@domain.com"]
+}
+
 #variable "developer_emails" {
 #  description = "A list of Google Workspace emails/groups for developer access"
 
