@@ -71,11 +71,7 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
 
 
 # AI Agent: Read-only access to files (Object Viewer)
-resource "google_storage_bucket_iam_member" "agent_read_access" {
-  bucket = google_storage_bucket.dev_data_bucket.name
-  role   = "roles/storage.objectViewer"
-  member = "serviceAccount:${google_service_account.agent_runtime_sa.email}"
-}
+
 
 # ---------------------------------------------------------------------------------
 # 6. WORKLOAD IDENTITY FEDERATION (For GitHub Actions)
