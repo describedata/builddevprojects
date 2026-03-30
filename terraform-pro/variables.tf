@@ -1,30 +1,4 @@
 
-variable "project_name" {
-  description = "The display name of the project"
-  type        = string
-}
-
-variable "project_id" {
-  description = "The unique ID (e.g., ai-dev)"
-  type        = string
-}
-
-variable "billing_account" {
-  description = "The Billing Account ID (XXXXXX-XXXXXX-XXXXXX)"
-  type        = string
-}
-
-variable "folder_id" {
-  description = "The Folder ID where this project will be nested"
-  type        = string
-}
-
-variable "developer_emails" {
-  description = "A list of Google Workspace emails/groups for developer access"
-  type        = list(string)
-  # Example: ["user1@domain.com", "user2@domain.com"]
-}
-
 
 # ---------------------------------------------------------------------------------
 # 1. IDENTIFICATION & HIERARCHY
