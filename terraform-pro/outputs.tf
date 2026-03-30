@@ -1,5 +1,4 @@
 
-
 # ---------------------------------------------------------------------------------
 # 1. PROJECT IDENTIFICATION
 # ---------------------------------------------------------------------------------
@@ -57,7 +56,7 @@ output "developer_setup_guide" {
 # 2. Direct Link to the GCP Console
 output "project_console_url" {
   description = "Direct link to the Google Cloud Console dashboard"
-  value       = "https://console.cloud.google.com/welcome?project=${google_project.new_project.project_id}"
+  value       = "https://console.cloud.google.com/welcome?project=${google_project.dev_project.project_id}"
 }
 
 # 3. The AI Agent Service Account Email
@@ -77,7 +76,7 @@ output "fhir_data_bucket" {
 # This generates a command they can copy/paste into their terminal
 output "developer_setup_command" {
   description = "Run this command to set your local gcloud context"
-  value       = "gcloud config set project ${google_project.new_project.project_id}"
+  value       = "gcloud config set project ${google_project.dev_project.project_id}"
 }
 
 # 6. BigQuery Audit Dataset (For Compliance)

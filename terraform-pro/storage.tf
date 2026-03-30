@@ -1,7 +1,7 @@
 # 1. The Bucket
 resource "google_storage_bucket" "dev_data_bucket" {
   name                        = "ai-dev-data-${random_id.suffix.hex}"
-  project                     = google_project.new_project.project_id
+  project                     = google_project.dev_project.project_id
   location                    = "US"
   storage_class               = "STANDARD"
   uniform_bucket_level_access = true
@@ -42,8 +42,8 @@ resource "google_storage_bucket_iam_member" "agent_read_access" {
 # 2. FHIR DATA BUCKET (Required by your outputs.tf)
 # ---------------------------------------------------------------------------------
 resource "google_storage_bucket" "fhir_storage" {
-  name                        = "${google_project.new_project.project_id}-fhir-storage"
-  project                     = google_project.new_project.project_id
+  name                        = "${google_project.dev_project.project_id}-fhir-storage"
+  project                     = google_project.dev_project.project_id
   location                    = "US"
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"
