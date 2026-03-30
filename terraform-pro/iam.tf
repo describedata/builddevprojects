@@ -5,9 +5,9 @@
 # This service account is what actually "runs" the LangGraph/Vertex AI agents.
 # It is the identity used by Cloud Run and Vertex AI Reasoning Engine.
 
-resource "google_service_account" "agent_runtime_sa" {
+resource "google_service_account" "ai_agent" {
   project      = google_project.dev_project.project_id
-  account_id   = "agent-runtime-sa"
+  account_id   = "ai_agent"
   display_name = "Identity for Vertex AI and Cloud Run Agents"
 }
 
@@ -42,7 +42,7 @@ resource "google_project_iam_member" "developer_roles" {
 # They need this to deploy a Cloud Run service using that specific identity.
 
 resource "google_service_account_iam_member" "developer_impersonation" {
-  service_account_id = google_service_account.agent_runtime_sa.name
+  service_account_id = google_service_account.ai_agent.name
   role               = "roles/iam.serviceAccountUser"
   member             = "group:${var.developer_group_email}"
 }
@@ -80,7 +80,7 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
 # by impersonating the runtime SA without needing a JSON key.
 
 resource "google_service_account_iam_member" "github_actions_impersonation" {
-  service_account_id = google_service_account.agent_runtime_sa.name
+  service_account_id = google_service_account.ai_agent.name
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/projects/${google_project.dev_project.number}/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/YOUR_ORG/agent-deployments"
 }

@@ -34,7 +34,7 @@ resource "google_storage_bucket_iam_member" "dev_bucket_access" {
 resource "google_storage_bucket_iam_member" "agent_read_access" {
   bucket = google_storage_bucket.dev_data_bucket.name
   role   = "roles/storage.objectViewer"
-  member = "serviceAccount:${google_service_account.ai-agent.email}"
+  member = "serviceAccount:${google_service_account.ai_agent.email}"
 }
 
 

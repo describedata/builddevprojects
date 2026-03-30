@@ -15,9 +15,9 @@ output "project_number" {
 # ---------------------------------------------------------------------------------
 # 2. RUNTIME IDENTITY (For Developer Repo)
 # ---------------------------------------------------------------------------------
-output "agent_runtime_service_account_email" {
+output "ai_agent_service_account_email" {
   description = "The email of the Service Account for running Agents. Use this for Workload Identity."
-  value       = google_service_account.agent_runtime_sa.email
+  value       = google_service_account.ai_agent_sa.email
 }
 
 # ---------------------------------------------------------------------------------
