@@ -28,7 +28,7 @@ resource "google_compute_subnetwork" "subnet" {
 
   # This helps, but the real fix is in the connector dependency
   lifecycle {
-    create_before_destroy = false 
+    create_before_destroy = true 
   }
 }
 
