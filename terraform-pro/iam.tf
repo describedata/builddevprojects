@@ -32,7 +32,7 @@ resource "google_project_iam_member" "developer_roles" {
 
   project = google_project.dev_project.project_id
   role    = each.key
-  member = "group:developers@describedata.ai"
+  member = var.developer_group_email # <--- No quotes!
 
 
 }
@@ -63,16 +63,7 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
   member     = "group:${var.developer_group_email}"
 }
 
-# ---------------------------------------------------------------------------------
-# 5. STORAGE DATA ACCESS (Bucket-Level Security)
-# ---------------------------------------------------------------------------------
-# Developers manage the data (CSVs, JSONs, FHIR samples).
-# The Agent only needs to read that data.
 
-# Developers: Full control over files (Object Admin)
-
-
-# AI Agent: Read-only access to files (Object Viewer)
 
 
 # ---------------------------------------------------------------------------------
