@@ -55,4 +55,5 @@ resource "google_logging_metric" "agent_errors" {
     metric_kind = "DELTA"
     value_type  = "INT64"
   }
+  depends_on = [time_sleep.wait_for_billing_sync]
 }

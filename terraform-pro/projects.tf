@@ -16,11 +16,7 @@ resource "google_project" "dev_project" {
   deletion_policy = "PREVENT"
 }
 
-# ---------------------------------------------------------------------------------
-# 2. BILLING STABILIZATION (The "Speed Bump")
-# ---------------------------------------------------------------------------------
-# This resource explicitly links the project to billing and forces a wait.
-# This prevents "Billing account not found" errors in services.tf.
+
 
 resource "google_billing_project_info" "dev_billing" {
   project         = google_project.dev_project.project_id
@@ -29,7 +25,7 @@ resource "google_billing_project_info" "dev_billing" {
 
 resource "time_sleep" "wait_for_billing_sync" {
   depends_on      = [google_billing_project_info.dev_billing]
-  create_duration = "60s"
+  create_duration = "120s"
 }
 
 
