@@ -27,20 +27,7 @@ resource "google_logging_project_bucket_config" "developer_logs" {
   depends_on = [time_sleep.wait_for_billing_sync]
 
 }
-# 3. IAM: Grant Developers access to see Logs and Metrics
-# We use "Logs Viewer" so they can debug their agents without 
-# being able to delete the log history.
-Gemini said
-It looks like logging.tf has its own copy of the two bugs we've been hunting down: the Billing Race Condition and the Group Name mismatch.
 
-Even though we fixed these in iam.tf and projects.tf, the logging.tf file is still using the placeholder email developers@yourcompany.com and isn't waiting for the billing account to sync.
-
-1. Fix the Billing Error (Line 18)
-Add the depends_on to the log bucket. Google Cloud won't let you create specific logging buckets until it is 100% sure the project has a credit card or billing account attached.
-
-Update logging.tf:
-
-Terraform
 resource "google_logging_project_bucket_config" "developer_logs" {
   project        = google_project.dev_project.project_id
   location       = "global"
@@ -50,12 +37,9 @@ resource "google_logging_project_bucket_config" "developer_logs" {
   # ADD THIS: Forces Terraform to wait for the 60s billing sync
   depends_on = [time_sleep.wait_for_billing_sync]
 }
-2. Fix the Group Error (Line 30)
-The error Group developers@yourcompany.com does not exist is happening because the code is still using the "template" email instead of your actual group.
 
-Update the member in logging.tf:
 
-Terraform
+
 resource "google_project_iam_member" "developer_monitoring" {
   for_each = toset([
     "roles/logging.viewer",
