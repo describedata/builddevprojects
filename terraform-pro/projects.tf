@@ -46,6 +46,8 @@ resource "google_vpc_access_connector" "connector" {
   machine_type = "e2-micro"
   min_instances = 2
   max_instances = 3
+
+  depends_on = [google_compute_subnetwork.subnet]
 }
 
 

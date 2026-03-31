@@ -23,6 +23,11 @@ resource "google_compute_subnetwork" "subnet" {
   network       = google_compute_network.vpc.id
   # Allows resources to use Google APIs without public IPs
   private_ip_google_access = true 
+
+  # This helps, but the real fix is in the connector dependency
+  lifecycle {
+    create_before_destroy = false 
+  }
 }
 
 # 3. Create Cloud NAT (So Private Agents can reach the Internet)
