@@ -80,9 +80,10 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
 # ---------------------------------------------------------------------------------
 # This allows the Developer Repo (GitHub Actions) to deploy to this project
 # by impersonating the runtime SA without needing a JSON key.
-
 resource "google_service_account_iam_member" "github_actions_impersonation" {
   service_account_id = google_service_account.ai_agent.name
-  role               = "roles/iam.workloadIdentityUser"
-  member = "principalSet://iam.googleapis.com/projects/571707457370/locations/global/workloadIdentityPools/github-actions-pool//attribute.repository/describedata/builddevprojects"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  
+  # Remove the double slash and ensure the prefix is correct
+  member = "principalSet://iam.googleapis.com/projects/571707457370/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/describedata/builddevprojects"
 }

@@ -20,8 +20,10 @@ resource "google_logging_project_bucket_config" "developer_logs" {
   location       = "global"
   retention_days = 30
   bucket_id      = "developer-activity-logs"
-}
 
+  # Add this line to wait for billing to stabilize
+  depends_on = [time_sleep.wait_for_billing_sync]
+}
 # 3. IAM: Grant Developers access to see Logs and Metrics
 # We use "Logs Viewer" so they can debug their agents without 
 # being able to delete the log history.
