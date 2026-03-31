@@ -25,7 +25,7 @@ resource "google_billing_project_info" "dev_billing" {
 
 resource "time_sleep" "wait_for_billing_sync" {
   depends_on      = [google_billing_project_info.dev_billing]
-  create_duration = "120s"
+  create_duration = "180s"
 }
 
 
@@ -57,5 +57,8 @@ resource "google_bigquery_dataset" "audit_logs_dataset" {
   project    = google_project.dev_project.project_id
   location   = "US"
 
-  depends_on = [time_sleep.wait_for_billing_sync]
+  depends_on = [
+    time_sleep.wait_for_billing_sync,
+    google_project_service.enabled_apis 
+  ]
 }

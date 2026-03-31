@@ -14,13 +14,13 @@ resource "google_compute_network" "vpc" {
 }
 
 # 2. Create a Private Subnet
-resource "google_compute_subnetwork" "subnet" {
+
+resource "google_compute_subnetwork" "ai_dev_subnet" {
   name          = "ai-dev-subnet"
-  project       = google_project.dev_project.project_id
-  ip_cidr_range = "10.0.1.0/24"
+  ip_cidr_range = "10.8.0.0/28" # Must be exactly /28
   region        = "us-central1"
+  project       = google_project.dev_project.project_id
   network       = google_compute_network.vpc.id
-  
   # Allows resources to use Google APIs without public IPs
   private_ip_google_access = true 
 }
