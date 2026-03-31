@@ -56,11 +56,11 @@ resource "google_vpc_access_connector" "connector" {
 # ---------------------------------------------------------------------------------
 resource "google_bigquery_dataset" "audit_logs_dataset" {
   dataset_id = "audit_logs"
-  project    = google_project.dev_project.project_id
+  project    = var.project_id
   location   = "US"
 
+  # This forces BigQuery to wait until the project services are active
   depends_on = [
-    time_sleep.wait_for_billing_sync,
-    google_project_service.enabled_apis 
+    google_project_service.enabled_apis
   ]
 }

@@ -16,7 +16,7 @@ resource "google_compute_network" "vpc" {
 # 2. Create a Private Subnet
 
 resource "google_compute_subnetwork" "subnet" {
-  name          = "ai-dev-subnet"
+  name          = "ai-dev-subnet-v2"
   # Shift the IP range slightly to bypass the lock
   # Old: 10.8.0.0/28 -> New: 10.8.1.0/28
   ip_cidr_range = "10.8.1.0/28"
