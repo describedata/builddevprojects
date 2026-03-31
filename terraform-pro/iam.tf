@@ -84,5 +84,5 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
 resource "google_service_account_iam_member" "github_actions_impersonation" {
   service_account_id = google_service_account.ai_agent.name
   role               = "roles/iam.workloadIdentityUser"
-  member = "principalSet://iam.googleapis.com/projects/audit-terraform-seed/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/describedata/builddevprojects"
+  member = "principalSet://iam.googleapis.com/projects/571707457370/locations/global/workloadIdentityPools/github-actions-pool//attribute.repository/describedata/builddevprojects"
 }
