@@ -32,7 +32,7 @@ resource "google_project_iam_member" "developer_roles" {
 
   project = google_project.dev_project.project_id
   role    = each.key
-  member  = "var.developer_group_email"
+  member = "group:${var.developer_group_email}"
 
   # ADD THIS LINE:
   depends_on = [google_cloud_identity_group.dev_group]
@@ -47,7 +47,7 @@ resource "google_project_iam_member" "developer_roles" {
 resource "google_service_account_iam_member" "developer_impersonation" {
   service_account_id = google_service_account.ai_agent.name
   role               = "roles/iam.serviceAccountUser"
-  member             = "var.developer_group_email"
+  member = "group:${var.developer_group_email}"
 }
 
 # ---------------------------------------------------------------------------------
