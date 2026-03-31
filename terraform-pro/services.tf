@@ -18,8 +18,8 @@ resource "google_project_service" "enabled_apis" {
     "monitoring.googleapis.com",          # Required for Dashboards
     "secretmanager.googleapis.com",       # Required for API Keys/Secrets
    "cloudbuild.googleapis.com",
-    "serviceusage.googleapis.com",
-    "
+    "serviceusage.googleapis.com"
+    
   ])
 
   project = google_project.dev_project.project_id
