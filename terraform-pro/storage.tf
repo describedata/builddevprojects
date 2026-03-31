@@ -24,11 +24,7 @@ resource "google_storage_bucket" "dev_data_bucket" {
 }
 
 # 2. IAM - Object Admin for Developers
-resource "google_storage_bucket_iam_member" "dev_bucket_access" {
-  bucket = google_storage_bucket.dev_data_bucket.name
-  role   = "roles/storage.objectAdmin"
-  member = "group:${var.developer_group_email}"
-}
+
 
 # 3. IAM - Object Viewer for the AI Agent
 resource "google_storage_bucket_iam_member" "agent_read_access" {
