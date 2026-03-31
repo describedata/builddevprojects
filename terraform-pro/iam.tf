@@ -34,8 +34,7 @@ resource "google_project_iam_member" "developer_roles" {
   role    = each.key
   member = "group:developers@describedata.ai"
 
-  # ADD THIS LINE:
-  depends_on = [google_cloud_identity_group.dev_group]
+
 }
 
 # ---------------------------------------------------------------------------------
