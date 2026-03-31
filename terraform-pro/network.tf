@@ -15,7 +15,7 @@ resource "google_compute_network" "vpc" {
 
 # 2. Create a Private Subnet
 
-resource "google_compute_subnetwork" "ai_dev_subnet" {
+resource "google_compute_subnetwork" "subnet" {
   name          = "ai-dev-subnet"
   ip_cidr_range = "10.8.0.0/28" # Must be exactly /28
   region        = "us-central1"
