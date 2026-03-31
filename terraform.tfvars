@@ -1,30 +1,30 @@
 # ==========================================
 # PROJECT IDENTIFICATION
 # ==========================================
+# Note: projects.tf will append a random suffix to this (e.g., ai-dev-a1b2)
 project_name = "ai-dev"
-project_id   = "ai-dev"
 
 # ==========================================
 # HIERARCHY & BILLING
 # ==========================================
-# Get this from: gcloud billing accounts list
 billing_account = "012345-67890A-BCDEFF"
 
-# The numeric ID of the Google Cloud Folder
-folder_id       = "376680453575"
+# The folder where the project will be created
+dev_folder_id   = "376680453575"
+
+# Your Google Workspace / Cloud Identity Customer ID (Starts with C)
+# Found in Admin Console > Account > Account Settings
+customer_id     = "C01234567" 
 
 # ==========================================
 # ACCESS CONTROL (TEAM)
 # ==========================================
-# List all developers who need access to the AI models and data
-developer_emails = [
-  "girishv@describedata.ai",
-  "rekhar@describedata.ai",
-  "lead_engineer@describedata.ai"
-]
+# This is the central group that will own all permissions.
+# MUST include the 'group:' prefix for your IAM code to work.
+developer_group_email = "group:developers@describedata.ai"
 
 # ==========================================
 # REGIONAL SETTINGS
 # ==========================================
-# Used for KMS KeyRings and Bucket locations
 region          = "us-central1"
+zone            = "us-central1-a"
