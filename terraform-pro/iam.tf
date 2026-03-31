@@ -6,9 +6,9 @@
 # It is the identity used by Cloud Run and Vertex AI Reasoning Engine.
 
 resource "google_service_account" "ai_agent" {
+  account_id   = "ai-agent-sa"  # <--- Change "_" to "-" here
+  display_name = "AI Agent Service Account"
   project      = google_project.dev_project.project_id
-  account_id   = "ai_agent"
-  display_name = "Identity for Vertex AI and Cloud Run Agents"
 }
 
 # ---------------------------------------------------------------------------------
