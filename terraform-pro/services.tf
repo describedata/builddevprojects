@@ -17,10 +17,9 @@ resource "google_project_service" "enabled_apis" {
     "logging.googleapis.com",             # Required for Log Explorer
     "monitoring.googleapis.com",          # Required for Dashboards
     "secretmanager.googleapis.com",       # Required for API Keys/Secrets
-    "usageinventory.googleapis.com",      # Optional: Helps with transparency
-    "cloudbuild.googleapis.com",
+   "cloudbuild.googleapis.com",
     "serviceusage.googleapis.com",
-    "kms.googleapis.com" # Added for your FHIR encryption!
+    "
   ])
 
   project = google_project.dev_project.project_id
