@@ -100,10 +100,7 @@ variable "subnet_cidr" {
 # 3. IDENTITY & STORAGE
 # ---------------------------------------------------------------------------------
 
-output "agent_runtime_service_account" {
-  description = "The email of the SA that developers must use for their agents."
-  value       = google_service_account.agent_runtime_sa.email
-}
+
 
 output "data_bucket_url" {
   description = "The GCS bucket URL for uploading EHR/FHIR data."
