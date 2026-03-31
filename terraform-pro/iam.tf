@@ -32,7 +32,7 @@ resource "google_project_iam_member" "developer_roles" {
 
   project = google_project.dev_project.project_id
   role    = each.key
-  member = "group:${var.developer_group_email}"
+  member = "group:developers@describedata.ai"
 
   # ADD THIS LINE:
   depends_on = [google_cloud_identity_group.dev_group]
@@ -47,7 +47,7 @@ resource "google_project_iam_member" "developer_roles" {
 resource "google_service_account_iam_member" "developer_impersonation" {
   service_account_id = google_service_account.ai_agent.name
   role               = "roles/iam.serviceAccountUser"
-  member = "group:${var.developer_group_email}"
+  member = "group:developers@describedata.ai"
 }
 
 # ---------------------------------------------------------------------------------
@@ -85,5 +85,5 @@ resource "google_compute_subnetwork_iam_member" "subnet_usage" {
 resource "google_service_account_iam_member" "github_actions_impersonation" {
   service_account_id = google_service_account.ai_agent.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/projects/${google_project.dev_project.number}/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/YOUR_ORG/agent-deployments"
+  member = "principalSet://iam.googleapis.com/projects/audit-terraform-seed/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/describedata/builddevprojects"
 }
