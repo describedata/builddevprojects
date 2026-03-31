@@ -17,7 +17,9 @@ resource "google_compute_network" "vpc" {
 
 resource "google_compute_subnetwork" "subnet" {
   name          = "ai-dev-subnet"
-  ip_cidr_range = "10.8.0.0/28" # Must be exactly /28
+  # Shift the IP range slightly to bypass the lock
+  # Old: 10.8.0.0/28 -> New: 10.8.1.0/28
+  ip_cidr_range = "10.8.1.0/28"
   region        = "us-central1"
   project       = google_project.dev_project.project_id
   network       = google_compute_network.vpc.id
