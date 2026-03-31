@@ -5,6 +5,12 @@ resource "google_compute_network" "vpc" {
   name                    = "ai-dev-vpc"
   project                 = google_project.dev_project.project_id
   auto_create_subnetworks = false
+
+  # MUST wait for billing AND the API to be ready
+  depends_on = [
+    time_sleep.wait_for_billing_sync,
+    google_project_service.enabled_apis
+  ]
 }
 
 # 2. Create a Private Subnet

@@ -60,4 +60,6 @@ resource "google_bigquery_dataset" "audit_logs_dataset" {
   dataset_id = "audit_logs"
   project    = google_project.dev_project.project_id
   location   = "US"
+
+  depends_on = [time_sleep.wait_for_billing_sync]
 }
