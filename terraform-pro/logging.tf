@@ -28,15 +28,6 @@ resource "google_logging_project_bucket_config" "developer_logs" {
 
 }
 
-resource "google_logging_project_bucket_config" "developer_logs" {
-  project        = google_project.dev_project.project_id
-  location       = "global"
-  retention_days = 30
-  bucket_id      = "developer-activity-logs"
-
-  # ADD THIS: Forces Terraform to wait for the 60s billing sync
-  depends_on = [time_sleep.wait_for_billing_sync]
-}
 
 
 
