@@ -22,6 +22,7 @@ jobs:
     # Use Environment Variables for easy updates
     env:
       PROJECT_ID: "audit-terraform-seed"
+      TF_VAR_developer_emails: '${{ secrets.DEVELOPER_EMAILS }}'
       # REPLACE the number and IDs below with your Step 1 results
       WIF_PROVIDER: "projects/571707457370/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider"
       SERVICE_ACCOUNT: "terraform-manager@audit-terraform-seed.iam.gserviceaccount.com"
@@ -31,7 +32,8 @@ jobs:
       TF_VAR_dev_folder_id: ${{ secrets.GCP_DEV_FOLDER_ID }}
       TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
       TF_VAR_project_name: "AI Development Project" # Or use a secret
-      TF_VAR_developer_emails: ${{ secrets.DEVELOPER_EMAILS }}
+      
+      
 
     steps:
     - name: Checkout Code
