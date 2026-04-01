@@ -60,8 +60,8 @@ variable "developer_roles" {
     "roles/container.developer",
     "roles/iam.serviceAccountUser",
     "roles/secretmanager.secretAccessor"
-    "
-    "
+    
+    
 
 
   ]
