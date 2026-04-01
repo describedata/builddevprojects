@@ -32,7 +32,8 @@ resource "google_project_iam_member" "developer_roles" {
 
   project = google_project.dev_project.project_id
   role    = each.key
-  member = var.developer_group_email # <--- No quotes!
+    # CHANGE: We now use 'user:' and reference the current email in the loop
+  member     = "user:${each.value}"
 
 
 }
@@ -56,14 +57,17 @@ resource "google_service_account_iam_member" "developer_impersonation" {
 # a service to a specific private subnet.
 
 resource "google_compute_subnetwork_iam_member" "subnet_usage" {
+  # This loops through your list: ['girishv@...', 'rekhar@...', 'lead_engineer@...']
+  for_each = toset(var.developer_emails)
+
   project    = google_project.dev_project.project_id
   region     = var.region
   subnetwork = google_compute_subnetwork.subnet.name
   role       = "roles/compute.networkUser"
-  member     = "group:${var.developer_group_email}"
+  
+  # CHANGE: We now use 'user:' and reference the current email in the loop
+  member     = "user:${each.value}"
 }
-
-
 
 
 # ---------------------------------------------------------------------------------

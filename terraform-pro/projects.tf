@@ -54,13 +54,18 @@ resource "google_vpc_access_connector" "connector" {
 # ---------------------------------------------------------------------------------
 # 4. BIGQUERY (AUDIT LOGS)
 # ---------------------------------------------------------------------------------
+resource "time_sleep" "wait_for_apis" {
+  create_duration = "30s"
+
+  depends_on = [google_project_service.enabled_apis]
+}
+
+
 resource "google_bigquery_dataset" "audit_logs_dataset" {
   dataset_id = "audit_logs"
   project    = var.project_id
   location   = "US"
 
   # This forces BigQuery to wait until the project services are active
-  depends_on = [
-    google_project_service.enabled_apis
-  ]
+  depends_on = [time_sleep.wait_for_apis]
 }
