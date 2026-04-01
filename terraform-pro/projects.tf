@@ -31,11 +31,18 @@ resource "time_sleep" "wait_for_billing_sync" {
 
 
 
+resource "time_sleep" "wait_for_apis" {
+  create_duration = "60s"
+
+  depends_on = [google_project_service.enabled_apis]
+}
+
+
 # ---------------------------------------------------------------------------------
 # 5. SERVERLESS VPC ACCESS (The Bridge)
 # ---------------------------------------------------------------------------------
 resource "google_vpc_access_connector" "connector" {
-  name          = "ai-dev-vpc-conn-v2"
+  name          = "ai-dev-vpc-conn-v3"
   project       = google_project.dev_project.project_id
   region        = "us-central1"
   
@@ -47,18 +54,14 @@ resource "google_vpc_access_connector" "connector" {
   min_instances = 2
   max_instances = 3
 
-  depends_on = [google_compute_subnetwork.subnet]
+  depends_on = [
+    google_compute_subnetwork.subnet,
+    time_sleep.wait_for_apis
+  ]
 }
 
 
-# ---------------------------------------------------------------------------------
-# 4. BIGQUERY (AUDIT LOGS)
-# ---------------------------------------------------------------------------------
-resource "time_sleep" "wait_for_apis" {
-  create_duration = "30s"
 
-  depends_on = [google_project_service.enabled_apis]
-}
 
 
 resource "google_bigquery_dataset" "audit_logs_dataset" {
