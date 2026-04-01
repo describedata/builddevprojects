@@ -7,7 +7,7 @@ resource "random_id" "suffix" {
 }
 
 resource "google_project" "dev_project" {
-  name            = "ai-dev"
+  name            = "res-dev"
   project_id      = var.project_id # Using the ID from your GitHub Secret
   
   folder_id       = replace(trimspace(var.dev_folder_id), "folders/", "")
@@ -29,6 +29,14 @@ resource "time_sleep" "wait_for_billing_sync" {
 }
 
 
+# Grant Developers access to the project
+resource "google_project_iam_member" "developer_access" {
+  for_each = toset(var.developer_emails)
+  project  = google_project.dev_project.project_id
+  role     = "roles/editor" # Or a more granular custom role
+  member   = "user:${each.value}"
+}
+
 
 
 resource "time_sleep" "wait_for_apis" {
@@ -42,7 +50,7 @@ resource "time_sleep" "wait_for_apis" {
 # 5. SERVERLESS VPC ACCESS (The Bridge)
 # ---------------------------------------------------------------------------------
 resource "google_vpc_access_connector" "connector" {
-  name          = "ai-dev-vpc-conn-v3"
+  name          = "res-dev-vpc-conn-v3"
   project       = google_project.dev_project.project_id
   region        = "us-central1"
   

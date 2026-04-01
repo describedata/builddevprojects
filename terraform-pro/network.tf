@@ -2,7 +2,7 @@
 
 # 1. Create the VPC
 resource "google_compute_network" "vpc" {
-  name                    = "ai-dev-vpc"
+  name                    = "res-dev-vpc"
   project                 = google_project.dev_project.project_id
   auto_create_subnetworks = false
 
@@ -16,7 +16,7 @@ resource "google_compute_network" "vpc" {
 # 2. Create a Private Subnet
 
 resource "google_compute_subnetwork" "subnet" {
-  name          = "ai-dev-subnet-v3"
+  name          = "res-dev-subnet-v3"
   # Shift the IP range slightly to bypass the lock
   # Old: 10.8.0.0/28 -> New: 10.8.1.0/28
   ip_cidr_range = "10.8.1.0/28"
@@ -34,7 +34,7 @@ resource "google_compute_subnetwork" "subnet" {
 
 # 3. Create Cloud NAT (So Private Agents can reach the Internet)
 resource "google_compute_router" "router" {
-  name    = "ai-dev-router"
+  name    = "res-dev-router"
   project = google_project.dev_project.project_id
   region  = "us-central1"
   network = google_compute_network.vpc.id

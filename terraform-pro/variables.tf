@@ -17,6 +17,7 @@ variable "project_name" {
 variable "project_id" {
   description = "The unique ID (e.g., ai-dev)"
   type        = string
+  default     = "res-dev-06b"
 }
 
 variable "folder_id" {
@@ -53,14 +54,19 @@ variable "developer_roles" {
     "roles/monitoring.viewer",
     "roles/cloudtrace.user",
     "roles/secretmanager.secretAccessor",
-    "roles/vpcaccess.user"
+    "roles/vpcaccess.user",
+    "roles/storage.objectAdmin".
+    "roles/pubsub.editor".
+    "roles/container.developer",
+    "roles/iam.serviceAccountUser",
+    "roles/secretmanager.secretAccessor"
+    "
+    "
+
+
   ]
 }
 
-
-# ---------------------------------------------------------------------------------
-# 2. REGIONAL SETTINGS
-# ---------------------------------------------------------------------------------
 
 variable "region" {
   description = "The primary GCP region for networking and resources."
@@ -92,8 +98,6 @@ variable "developer_emails" {
   # Example: ["user1@domain.com", "user2@domain.com"]
 }
 
-#variable "developer_emails" {
-#  description = "A list of Google Workspace emails/groups for developer access"
 
 #  type        = list(string)
   # Example: ["user1@domain.com", "user2@domain.com"]
