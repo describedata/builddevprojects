@@ -1,0 +1,44 @@
+# =============================================================================
+# Terraform Core Files
+# =============================================================================
+# Local .terraform directories (contains provider binaries)
+**/.terraform/*
+
+# Local state files (Never commit these if using GCS backend)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# =============================================================================
+# Sensitive Data and Credentials
+# =============================================================================
+# Terraform variables containing secrets/sensitive IDs
+*.tfvars
+*.tfvars.json
+
+# Local environment files (e.g., for GOOGLE_IMPERSONATE_SERVICE_ACCOUNT)
+.env
+.envrc
+
+# Google Cloud Application Default Credentials (ADC)
+.gcp-auth.json
+service-account-key.json
+
+# =============================================================================
+# IDE and System Files
+# =============================================================================
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.bak
+
+# =============================================================================
+# Terraform Lock File
+# =============================================================================
+# Usually, you SHOULD commit this to ensure provider version consistency.
+# If you want to ignore it (not recommended for teams), uncomment below:
+# .terraform.lock.hcl

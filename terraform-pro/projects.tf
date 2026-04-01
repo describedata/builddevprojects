@@ -35,7 +35,7 @@ resource "time_sleep" "wait_for_billing_sync" {
 # 5. SERVERLESS VPC ACCESS (The Bridge)
 # ---------------------------------------------------------------------------------
 resource "google_vpc_access_connector" "connector" {
-  name          = "ai-dev-vpc-conn"
+  name          = "ai-dev-vpc-conn-v2"
   project       = google_project.dev_project.project_id
   region        = "us-central1"
   
