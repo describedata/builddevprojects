@@ -55,8 +55,8 @@ variable "developer_roles" {
     "roles/cloudtrace.user",
     "roles/secretmanager.secretAccessor",
     "roles/vpcaccess.user",
-    "roles/storage.objectAdmin".
-    "roles/pubsub.editor".
+    "roles/storage.objectAdmin",
+    "roles/pubsub.editor",
     "roles/container.developer",
     "roles/iam.serviceAccountUser",
     "roles/secretmanager.secretAccessor"
