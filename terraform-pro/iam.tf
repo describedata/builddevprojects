@@ -18,24 +18,20 @@ resource "google_service_account" "ai_agent" {
 # It allows them to use all services without having Project "Owner" or "Admin" rights.
 
 resource "google_project_iam_member" "developer_roles" {
-  for_each = toset([
-    "roles/viewer",                     # Global visibility of the console
-    "roles/aiplatform.user",            # Run/Test Vertex AI Agents and Notebooks
-    "roles/run.developer",              # Deploy/Manage Cloud Run services
-    "roles/artifactregistry.writer",    # Push/Pull Docker images
-    "roles/logging.viewer",             # View logs for debugging agents
-    "roles/monitoring.viewer",          # View performance dashboards
-    "roles/cloudtrace.user",            # Trace request flow through agents
-    "roles/secretmanager.secretAccessor", # Read API keys (Neo4j, LLM keys)
-    "roles/vpcaccess.user"              # Permission to use the VPC Connector
-  ])
+  # This creates a unique key for every [User + Role] combination
+  for_each = {
+    for pair in setproduct(var.developer_roles, var.developer_emails) :
+    "${pair[1]}-${pair[0]}" => {
+      role   = pair[0]
+      member = pair[1]
+    }
+  }
 
   project = google_project.dev_project.project_id
-  role    = each.key
-    # CHANGE: We now use 'user:' and reference the current email in the loop
-  member     = "user:${each.value}"
-
-
+  role    = each.value.role
+  
+  # FIX: Ensure 'user:' is prefixed to the email address (member)
+  member  = "user:${each.value.member}"
 }
 
 # ---------------------------------------------------------------------------------

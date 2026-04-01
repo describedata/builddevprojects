@@ -39,6 +39,25 @@ variable "customer_id" {
   default     = "C0320vp24" # Replace with your actual ID
 }
 
+
+
+variable "developer_roles" {
+  type        = list(string)
+  description = "List of IAM roles to grant to developers"
+  default     = [
+    "roles/viewer",
+    "roles/aiplatform.user",
+    "roles/run.developer",
+    "roles/artifactregistry.writer",
+    "roles/logging.viewer",
+    "roles/monitoring.viewer",
+    "roles/cloudtrace.user",
+    "roles/secretmanager.secretAccessor",
+    "roles/vpcaccess.user"
+  ]
+}
+
+
 # ---------------------------------------------------------------------------------
 # 2. REGIONAL SETTINGS
 # ---------------------------------------------------------------------------------
