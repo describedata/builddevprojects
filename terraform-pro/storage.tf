@@ -1,6 +1,6 @@
 # 1. The Bucket
 resource "google_storage_bucket" "dev_data_bucket" {
-  name                        = "ai-dev-data-${random_id.suffix.hex}"
+  name                        = "res-dev-data-${random_id.suffix.hex}"
   project                     = google_project.dev_project.project_id
   location                    = "US"
   storage_class               = "STANDARD"
