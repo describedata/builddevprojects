@@ -77,5 +77,5 @@ resource "google_bigquery_dataset" "audit_logs_dataset" {
   location   = "US"
 
   # This forces BigQuery to wait until the project services are active
-  depends_on = [time_sleep.wait_for_apis]
+  depends_on = [time_sleep.wait_for_apis, google_project_service.enabled_apis]
 }
