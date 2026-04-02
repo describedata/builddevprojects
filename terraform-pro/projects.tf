@@ -2,10 +2,9 @@
 # ---------------------------------------------------------------------------------
 # 1. PROJECT CREATION
 # ---------------------------------------------------------------------------------
-resource "random_id" "suffix" {
+resource "random_id" "project_suffix" {
   byte_length = 2
 }
-
 resource "google_project" "dev_project" {
   name            = "res-dev"
   project_id = "res-dev-${random_id.project_suffix.hex}"
