@@ -58,8 +58,8 @@ variable "developer_roles" {
     "roles/storage.objectAdmin",
     "roles/pubsub.editor",
     "roles/container.developer",
-    "roles/iam.serviceAccountUser",
-    "roles/secretmanager.secretAccessor"
+    "roles/iam.serviceAccountUser"
+    
     
     
 
