@@ -1,7 +1,3 @@
-resource "time_sleep" "wait_for_billing_sync" {
-  depends_on      = [google_billing_project_info.dev_billing]
-  create_duration = "180s"
-}
 
 
 # 1. Enable Logging and Monitoring APIs
@@ -19,8 +15,7 @@ resource "google_project_service" "logging_apis" {
   depends_on = [time_sleep.wait_for_billing_sync]
 }
 
-# 2. Create a Log Bucket for Long-term Storage
-# This is where all Agent and Cloud Run logs will live.
+
 resource "google_logging_project_bucket_config" "developer_logs" {
   project        = google_project.dev_project.project_id
   location       = "global"
@@ -32,7 +27,7 @@ resource "google_logging_project_bucket_config" "developer_logs" {
   depends_on = [
     google_project.dev_project,
     google_project_service.enabled_apis,
-    ime_sleep.wait_for_billing_sync
+    time_sleep.wait_for_billing_sync
   ]
 
  
