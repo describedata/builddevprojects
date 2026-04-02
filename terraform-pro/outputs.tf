@@ -36,21 +36,14 @@ output "subnet_id" {
 # 4. DEVELOPER SETUP COMMANDS (Convenience)
 # ---------------------------------------------------------------------------------
 output "developer_setup_guide" {
-  description = "Commands for developers to run locally to sync with this infrastructure."
-  value       = <<EOF
-
-  1. Set local project:
-     gcloud config set project ${google_project.dev_project.project_id}
-
-  2. Configure Docker for Artifact Registry:
-     gcloud auth configure-docker us-central1-docker.pkg.dev
-
-  3. VPC Connector for Cloud Run (Terraform reference):
-     ${google_vpc_access_connector.connector.id}
-
-  EOF
+  value = <<-EOT
+    1. Set local project:
+       gcloud config set project ${google_project.dev_project.project_id}
+    
+    2. VPC Connector:
+       ${google_vpc_access_connector.connector.id}
+  EOT
 }
-
 
 # 2. Direct Link to the GCP Console
 output "project_console_url" {
