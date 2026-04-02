@@ -22,7 +22,12 @@ resource "google_logging_project_bucket_config" "developer_logs" {
   bucket_id      = "developer-activity-logs"
 
   # Add this line to wait for billing to stabilize
-  depends_on = [time_sleep.wait_for_billing_sync]
+
+  depends_on = [
+    google_project.dev_project,
+    google_project_service.enabled_apis,
+    ime_sleep.wait_for_billing_sync
+  ]
 
  
 
