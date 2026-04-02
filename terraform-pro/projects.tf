@@ -8,7 +8,7 @@ resource "random_id" "suffix" {
 
 resource "google_project" "dev_project" {
   name            = "res-dev"
-  project_id      = var.project_id # Using the ID from your GitHub Secret
+  project_id = "res-dev-${random_id.project_suffix.hex}"
   
   folder_id       = replace(trimspace(var.dev_folder_id), "folders/", "")
   billing_account = trimspace(var.billing_account)
