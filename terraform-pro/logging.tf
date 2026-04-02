@@ -1,3 +1,9 @@
+resource "time_sleep" "wait_for_billing_sync" {
+  depends_on      = [google_billing_project_info.dev_billing]
+  create_duration = "180s"
+}
+
+
 # 1. Enable Logging and Monitoring APIs
 resource "google_project_service" "logging_apis" {
   for_each = toset([
