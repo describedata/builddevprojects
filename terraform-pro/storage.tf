@@ -1,4 +1,9 @@
 # 1. The Bucket
+# This generates the unique hex suffix
+resource "random_id" "suffix" {
+  byte_length = 2
+}
+
 resource "google_storage_bucket" "dev_data_bucket" {
   name                        = "res-dev-data-${random_id.suffix.hex}"
   project                     = google_project.dev_project.project_id
