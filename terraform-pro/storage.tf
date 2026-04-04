@@ -26,17 +26,15 @@ resource "google_storage_bucket" "dev_data_bucket" {
       storage_class = "NEARLINE"
     }
   }
+
+  # Ensure the project and APIs are ready before creating the bucket
+  depends_on = [google_project_service.enabled_apis]
 }
 
-# 2. IAM - Object Admin for Developers
 
 
-# 3. IAM - Object Viewer for the AI Agent
-resource "google_storage_bucket_iam_member" "agent_read_access" {
-  bucket = google_storage_bucket.dev_data_bucket.name
-  role   = "roles/storage.objectViewer"
-  member = "serviceAccount:${google_service_account.ai_agent.email}"
-}
+
+
 
 
 # ---------------------------------------------------------------------------------
@@ -48,8 +46,19 @@ resource "google_storage_bucket" "fhir_storage" {
   location                    = "US"
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"
+
+  depends_on = [google_project_service.enabled_apis]
 }
-# Grant the AI Agent read access to the FHIR bucket
+
+
+# 3. Grant the AI Agent read access to the FHIR bucket
+resource "google_storage_bucket_iam_member" "agent_read_access" {
+  bucket = google_storage_bucket.dev_data_bucket.name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.ai_agent.email}"
+}
+
+
 resource "google_storage_bucket_iam_member" "agent_fhir_read" {
   bucket = google_storage_bucket.fhir_storage.name
   role   = "roles/storage.objectViewer"
